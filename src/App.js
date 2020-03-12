@@ -1,24 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import 'semantic-ui-css/semantic.min.css'
+import {Route, Switch} from 'react-router-dom'
+import { Container } from 'semantic-ui-react';
+import Home from './Components/Home';
+import About from './Components/About';
+import Viruses from './Components/Viruses';
+import Navbar from './Components/Navbar';
+import NoMatch from './Components/NoMatch';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Container>
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={Home}/>
+          <Route exact path='/About' component={About} />
+          <Route exact path ='/Viruses' component={Viruses} />
+          <Route component={NoMatch} />
+        </Switch>
+      </Container>
     </div>
   );
 }
