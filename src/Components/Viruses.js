@@ -1,7 +1,8 @@
 import React from "react";
 import VirusForm from './VirusForm'
 import Virus from './Virus'
-import { Container, Header,Button,Table, } from "semantic-ui-react"; 
+import EditVirus from "./EditVirus";
+import {Container,Header} from "semantic-ui-react"
 
 export default class Viruses extends React.Component{
   state = {
@@ -17,23 +18,46 @@ export default class Viruses extends React.Component{
     .substring(1);
   }
 
+
+
   renderViruses(){
-    return this.state.viruses.map((virus, i)=>(
-      <Virus
-        key={`virusitem=${i}`}
-        name = {virus.name}
-        description = {virus.description}
-        id = {virus.id} />
-    ))
+    return this.state.viruses.map((virus)=>
+      <EditVirus
+        key={virus.id}
+       {...virus}
+        edit={this.editVirus}
+        remove = {this.removeVirus}
+        />
+    )
+  }  
+  
+  editVirus = (virusInfo) => {
+    const viruses = this.state.viruses.map( virus => {
+      if (virus.id === virusInfo.id)
+        return virusInfo;
+      return virus
+    });
+    this.setState({viruses})
   }
+
 
   addToViruses = (name, description) => {
 
-    var newVirus= {name:name, description:description, id: Math.floor(Math.random() * 1000000)};
+    var newVirus= {name:name, description:description, id: this.getUniqId};
     this.setState({
       viruses: [newVirus,...this.state.viruses]
     })
   }
+  
+  removeVirus = (id) => {
+    const viruses = this.state.viruses.filter( virus => {
+      if (virus.id !== id)
+        return virus
+    });
+    this.setState({ viruses: [...viruses], });
+  };
+
+
 
 
 render(){
@@ -44,6 +68,7 @@ render(){
         <Header as ='h1'>Viruses</Header>
             <VirusForm addToViruses={this.addToViruses} />
         {this.renderViruses()}
+        
         </div>
         </Container>
     
