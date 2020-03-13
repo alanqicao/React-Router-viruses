@@ -1,6 +1,7 @@
 import React from "react";
 import VirusForm from './VirusForm'
 import Virus from './Virus'
+import EditVirus from "./EditVirus";
 
 export default class Viruses extends React.Component{
   state = {
@@ -16,19 +17,30 @@ export default class Viruses extends React.Component{
     .substring(1);
   }
 
+
+
   renderViruses(){
-    return this.state.viruses.map((virus, i)=>(
-      <Virus
-        key={`virusitem=${i}`}
-        name = {virus.name}
-        description = {virus.description}
-        id = {virus.id} />
-    ))
+    return this.state.viruses.map((virus)=>
+      <EditVirus
+        key={virus.id}
+       {...virus}
+        edit={this.editVirus} />
+    )
+  }  
+  
+  editVirus = (virusInfo) => {
+    const viruses = this.state.viruses.map( virus => {
+      if (virus.id === virusInfo.id)
+        return virusInfo;
+      return virus
+    });
+    this.setState({viruses})
   }
+
 
   addToViruses = (name, description) => {
 
-    var newVirus= {name:name, description:description, id: Math.floor(Math.random() * 1000000)};
+    var newVirus= {name:name, description:description, id: this.getUniqId};
     this.setState({
       viruses: [newVirus,...this.state.viruses]
     })
