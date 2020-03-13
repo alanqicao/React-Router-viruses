@@ -1,6 +1,7 @@
 import React from "react";
 import VirusForm from './VirusForm'
 import Virus from './Virus'
+import { Container, Header,Button,Table, } from "semantic-ui-react"; 
 
 export default class Viruses extends React.Component{
   state = {
@@ -38,13 +39,15 @@ export default class Viruses extends React.Component{
 render(){
   return(
 
-  
-    <div>
-        <h1>Viruses</h1>
+      <Container>
+        <div>
+        <Header as ='h1'>Viruses</Header>
             <VirusForm addToViruses={this.addToViruses} />
         {this.renderViruses()}
+        </div>
+        </Container>
+    
 
-    </div>
   )
   }
 

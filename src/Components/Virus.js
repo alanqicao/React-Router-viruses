@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Button, Table, } from "semantic-ui-react";
 const Virus = ({id, name, description}) => (
 
   <div style={ styles }>
